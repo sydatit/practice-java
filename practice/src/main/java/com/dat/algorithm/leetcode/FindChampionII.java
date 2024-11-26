@@ -13,23 +13,20 @@ public class FindChampionII {
     private boolean[] visited;
     private int[] dp;
     public int findChampion(int n, int[][] edges) {
-        dp = new int[n];
-        adj = new ArrayList[n];
-        visited = new boolean[n];
-        for (int i = 0; i < n; i++) {
-            adj[i] = new ArrayList<>();
-        }
+        int[] counts = new int[n];
 
         for (int[] edge : edges) {
-            adj[edge[0]].add(edge[1]);
+            counts[edge[1]]++;
         }
-
+        int count = 0;
+        int res = 0;
         for (int i = 0; i < n; i++) {
-            int count = traverseDFS(i);
-            if (count == n) 
-                return i;
+            if (counts[i] == 0) {
+                count++;
+                res = i;
+            }
         }
-        return -1;
+        return count > 1 ? -1 : res;
     }
 
     private int traverseDFS(int u) {
